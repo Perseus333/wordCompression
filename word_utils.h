@@ -2,10 +2,10 @@
 #include <stdio.h>
 
 #ifndef WORD_UTILS_H
-#define WORD_UTILS_H
 
 #define CHARS_PER_WORD 20
 #define FILE_NAME_MAX_LEN 16
+#define TOTAL_WORDS 10000
 
 typedef struct
 {

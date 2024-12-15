@@ -35,7 +35,7 @@ void populateWordList(FILE* file, WordList* wordList, int wordListSize)
 {    
     char wordBuffer[CHARS_PER_WORD];
     int wordPos = 0;
-    size_t len = CHARS_PER_WORD;
+    int len = CHARS_PER_WORD;
     
     while (fgets(wordBuffer, sizeof(wordBuffer), file))
     {

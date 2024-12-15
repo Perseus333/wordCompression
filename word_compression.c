@@ -8,10 +8,6 @@
 #include "word_utils.h"
 
 
-// Modify this value
-const int totalWords = 10000;
-
-
 // Ordering the words by length
 void orderList(WordList* wordList, WordList* orderedList)
 {
@@ -19,9 +15,9 @@ void orderList(WordList* wordList, WordList* orderedList)
     
     for (int charLen = 1; charLen < CHARS_PER_WORD; charLen++)
     {
-        for (unsigned int wordIndex = 0; wordIndex < totalWords; wordIndex++)
+        for (unsigned int wordIndex = 0; wordIndex < TOTAL_WORDS; wordIndex++)
         {
-            if (strlen(wordList->words[wordIndex]) == charLen)
+            if ((int)strlen(wordList->words[wordIndex]) == charLen)
             {
                 strncpy(orderedList->words[currentIndex], wordList->words[wordIndex], CHARS_PER_WORD);
                 currentIndex++;
@@ -32,7 +28,7 @@ void orderList(WordList* wordList, WordList* orderedList)
 
 void compressWords(WordList* wordList)
 {
-    for (unsigned int wordIndex = 0; wordIndex < totalWords; wordIndex++)
+    for (unsigned int wordIndex = 0; wordIndex < TOTAL_WORDS; wordIndex++)
     {
         bool validCandidate = false;
         int charIndex = 1;
@@ -72,11 +68,11 @@ int main()
 {
     clock_t startTime = clock();
     
-    FILE* wordListFile = readFile(totalWords);
-    WordList* wordList = allocateWordList(totalWords);
-    populateWordList(wordListFile, wordList, totalWords);
+    FILE* wordListFile = readFile(TOTAL_WORDS);
+    WordList* wordList = allocateWordList(TOTAL_WORDS);
+    populateWordList(wordListFile, wordList, TOTAL_WORDS);
     
-    WordList* orderedList = allocateWordList(totalWords);
+    WordList* orderedList = allocateWordList(TOTAL_WORDS);
     orderList(wordList, orderedList);
     compressWords(orderedList);
 
@@ -84,7 +80,7 @@ int main()
     double elapsed_seconds = (double)(endTime - startTime) / CLOCKS_PER_SEC;
     printf("Elapsed time: %.6f seconds\n", elapsed_seconds);
     
-    // for (int i = 0; i < totalWords; i++) printf("%s\n", orderedList->words[i]);
+    // for (int i = 0; i < TOTAL_WORDS; i++) printf("%s\n", orderedList->words[i]);
 
     // Free the dynamically allocated WordLists
     free(wordList);
