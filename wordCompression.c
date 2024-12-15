@@ -11,28 +11,8 @@ const char vowels[5] = {'e', 'a', 'o', 'i', 'u'};
 
 typedef struct
 {
-    int wordChars;
-    int wordAmount;
     char words[1][CHARS_PER_WORD];
 } WordList;
-/*
-WordList *allocateWordList(int wordListSize)
-{
-    WordList *words = malloc(sizeof(WordList) + (sizeof(char[CHARS_PER_WORD]))*(wordListSize-1));
-    
-    words->wordChars = CHARS_PER_WORD;
-    words->wordAmount = wordListSize;
-    
-    for (int i = 0; i < wordListSize; ++i)
-    {
-        for (int j = 0; j < CHARS_PER_WORD; ++j)
-        {
-            words->words[i][j] = '\0';
-        }
-    }
-    return words;
-}
-*/
 
 // New GPT Code
 WordList* allocateWordList(int wordListSize)
@@ -42,8 +22,6 @@ WordList* allocateWordList(int wordListSize)
         fprintf(stderr, "Memory allocation failed!\n");
         exit(EXIT_FAILURE);
     }
-    words->wordChars = CHARS_PER_WORD;
-    words->wordAmount = wordListSize;
     return words;
 }
 
@@ -84,6 +62,25 @@ WordList* readFile(int wordListSize)
     return wordList;
 }
 
+// Ordering the words by length
+WordList* orderList(WordList* wordList)
+{
+    WordList* orderedList = allocateWordList(wordListSize);
+    int lastPos = 0;
+    for (int ch = 1; ch < CHARS_PER_WORD; ch++)
+    {
+        for (unsigned int wordIndex = 0; wordIndex < wordListSize; wordIndex++)
+        {
+            if (strlen(wordList->words[wordIndex]) == ch)
+            {
+                strncpy(orderedList->words[lastPos], wordList->words[wordIndex], CHARS_PER_WORD);
+                lastPos++;
+            }
+        }
+    }
+    return orderedList;
+}
+
 int getWordLen(char* word)
 {
     int len = 0;
@@ -121,13 +118,13 @@ WordList* compressWords(WordList* wordList)
                     // If new candidate is shorter than other candidates, extend the other conflicting compressedWord by 1 character
                     if (ch >= wordLen) {
                         // printf("Candidate longer than original\n");
-                        compressedList->words[i][wordLen+1] = 'z';
+                        // compressedList->words[i][wordLen+1] = 'z';
                     }
                     break;
                 }
             }
         }
-        printf("%s\n", candidate);
+        // printf("%s\n", candidate);
         strncpy(compressedList->words[wordIndex], candidate, ch);
         compressedList->words[wordIndex][ch] = '\0';
     }
@@ -139,6 +136,9 @@ int main()
 {
     WordList* wordList = readFile(wordListSize);
     // for (int i = 0; i < wordListSize; i++) printf(wordList->words[i]);
-    WordList* compressedList = compressWords(wordList);
+    WordList* orderedList = orderList(wordList);
+    // for (int i = 0; i < wordListSize; i++) printf("%s\n", orderedList->words[i]);
+    WordList* compressedList = compressWords(orderedList);
+    for (int i = 0; i < wordListSize; i++) printf("%s -> %s\n", orderedList->words[i], compressedList->words[i]);
     return 0;
 }
