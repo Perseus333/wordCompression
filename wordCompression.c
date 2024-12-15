@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define CHARS_PER_WORD 20
 
@@ -134,11 +135,17 @@ WordList* compressWords(WordList* wordList)
 
 int main()
 {
+    clock_t startTime = clock();
+    
     WordList* wordList = readFile(wordListSize);
     // for (int i = 0; i < wordListSize; i++) printf(wordList->words[i]);
     WordList* orderedList = orderList(wordList);
     // for (int i = 0; i < wordListSize; i++) printf("%s\n", orderedList->words[i]);
     WordList* compressedList = compressWords(orderedList);
+
+    clock_t endTime = clock();
+    double elapsed_seconds = (double)(endTime - startTime) / CLOCKS_PER_SEC;
+    printf("Elapsed time: %.6f seconds\n", elapsed_seconds);
     for (int i = 0; i < wordListSize; i++) printf("%s -> %s\n", orderedList->words[i], compressedList->words[i]);
     return 0;
 }
