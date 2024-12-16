@@ -20,7 +20,6 @@ FILE* readFile(int wordListSize)
 {
     char fileName[FILE_NAME_MAX_LEN]; 
     sprintf(fileName, "%s/%d.txt", DATA_DIR, wordListSize);
-    printf(fileName);
     
     FILE* file = fopen(fileName, "r");
     
