@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "word_utils.h"
+#include "../include/word_utils.h"
 
 WordList* allocateWordList(int wordListSize)
 {
@@ -19,7 +19,8 @@ WordList* allocateWordList(int wordListSize)
 FILE* readFile(int wordListSize)
 {
     char fileName[FILE_NAME_MAX_LEN]; 
-    sprintf(fileName, "%d.txt", wordListSize);
+    sprintf(fileName, "%s/%d.txt", DATA_DIR, wordListSize);
+    printf(fileName);
     
     FILE* file = fopen(fileName, "r");
     

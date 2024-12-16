@@ -3,9 +3,10 @@
 
 #ifndef WORD_UTILS_H
 
+#define TOTAL_WORDS 10000
 #define CHARS_PER_WORD 20
 #define FILE_NAME_MAX_LEN 16
-#define TOTAL_WORDS 10000
+#define DATA_DIR "data"
 
 typedef struct
 {

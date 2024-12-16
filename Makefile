@@ -3,9 +3,9 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
 
 # Source files
-SRC = word_compression.c word_utils.c
+SRC = src/main.c src/word_utils.c #src/hash_utils.c
 # Output executable
-OUT = main
+OUT = bin/main
 
 # Default target
 all: $(OUT)

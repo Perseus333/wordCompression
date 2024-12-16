@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include "word_utils.h"
+#include "../include/word_utils.h"
 
 
 // Ordering the words by length
