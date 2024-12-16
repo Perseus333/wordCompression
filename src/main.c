@@ -75,7 +75,7 @@ int main()
     double elapsed_seconds = (double)(endTime - startTime) / CLOCKS_PER_SEC;
     printf("Elapsed time: %.6f seconds\n", elapsed_seconds);
     
-    for (int i = 0; i < TOTAL_WORDS; i++) printf("%s\n", orderedList->words[i]);
+    // for (int i = 0; i < TOTAL_WORDS; i++) printf("%s\n", orderedList->words[i]);
 
     // Free the dynamically allocated WordLists
     free(wordList);
