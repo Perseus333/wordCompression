@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../include/hash_utils.h"
 
+// Inserts the word in the corresponding bucket automatically
 void insertWord(WordHashTable* table, const char* word)
 {
     int length = strlen(word);
@@ -15,12 +16,13 @@ void insertWord(WordHashTable* table, const char* word)
         exit(EXIT_FAILURE);
     }
 
-    // Ask GPT to explain this block of code better
     strcpy(newNode->word, word);
+    // Assigns a new next mode at the end of the linked-list bucket
     newNode->next = table->buckets[bucketIndex];
     table->buckets[bucketIndex] = newNode;
 }
 
+// Searches for a word in the word table
 int searchWord(WordHashTable* table, const char* word)
 {
     int length = strlen(word);
@@ -31,10 +33,10 @@ int searchWord(WordHashTable* table, const char* word)
     {
         if (strncmp(currentWord->word, word, CHARS_PER_WORD) == 0)
         {
-            return 1; // Word found 
+            return 1; // found 
         }
         currentWord = currentWord->next;
     }
-    return 0; // Word not found
+    return 0; // not found
 }
 

@@ -4,15 +4,17 @@
 #ifndef HASH_UTILS_H
 #define HASH_UTILS_H
 
+// Creates a linked list where each node represents a word
 typedef struct Node
 {
     char word[CHARS_PER_WORD];
     struct Node* next;
 } Node;
 
+
+// To search for words more effectively they are split into buckets by their lenght
 typedef struct
 {
-    // Create as many buckets as word lenghts
     Node* buckets[CHARS_PER_WORD];
 } WordHashTable;
 

@@ -1,5 +1,4 @@
 // word_utils.c
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,7 +36,15 @@ void populateWordList(FILE* file, WordList* wordList, int wordListSize)
     int wordPos = 0;
     int len = CHARS_PER_WORD;
     
-    while (fgets(wordBuffer, sizeof(wordBuffer), file))
+    /*
+    The wordlist file must have a the specific format of:
+    word1
+    word2
+    word3
+    ...
+    And preferably be ordered by frequency
+    */
+    while ((fgets(wordBuffer, sizeof(wordBuffer), file)) && (wordPos < wordListSize))
     {
         int wordLen = 0;
         // Finds the end of line
@@ -51,10 +58,6 @@ void populateWordList(FILE* file, WordList* wordList, int wordListSize)
             }
         }
         strncpy(wordList->words[wordPos], wordBuffer, wordLen);
-        
         ++wordPos;
-            
-        if (wordPos >= wordListSize)
-            break;
     }
 }

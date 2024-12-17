@@ -4,6 +4,7 @@
 #ifndef WORD_UTILS_H
 #define WORD_UTILS_H
 
+// Change this values to configure the program
 #define TOTAL_WORDS 10000
 #define CHARS_PER_WORD 20
 #define FILE_NAME_MAX_LEN 16
