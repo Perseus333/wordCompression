@@ -61,15 +61,16 @@ jobs:
       - name: Archive Build Artifacts
         run: |
           # Archive based on the OS
-          if [[ ${{ matrix.os }} == "ubuntu-latest" ]]; then
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             zip -r dist/linux-build.zip dist/  # Changed tar to zip for stability
           fi
-          if [[ ${{ matrix.os }} == "macos-latest" ]]; then
+          if [ "${{ matrix.os }}" == "macos-latest" ]; then
             zip -r dist/mac-build.zip dist/  # Changed tar to zip for stability
           fi
-          if [ ${{ matrix.os }} == "windows-latest" ]; then
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
             7z a dist/windows-build.zip dist/*  # Windows: using 7z
           fi
+        shell: pwsh
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
