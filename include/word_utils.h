@@ -9,6 +9,7 @@
 #define CHARS_PER_WORD 20
 #define FILE_NAME_MAX_LEN 16
 #define DATA_DIR "data"
+#define OUTPUT_DIR "output"
 
 typedef struct
 {
@@ -17,6 +18,7 @@ typedef struct
 
 WordList* allocateWordList(int wordListSize);
 FILE* readFile(int wordListSize);
+void writeOutputFile(WordList* finalWordList);
 void populateWordList(FILE* file, WordList* wordList, int wordListSize);
 
 #endif // WORD_UTILS

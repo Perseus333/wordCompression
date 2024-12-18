@@ -22,12 +22,33 @@ FILE* readFile(int wordListSize)
     
     FILE* file = fopen(fileName, "r");
     
-    if (!file) {
+    if (!file)
+    {
         fprintf(stderr, "Could not read file");
         exit(EXIT_FAILURE);
     }
 
     return file;
+}
+
+void writeOutputFile(WordList* finalWordList)
+{
+    char outputFileName[FILE_NAME_MAX_LEN];
+    sprintf(outputFileName, "%s/output.txt", OUTPUT_DIR);
+
+    FILE* outputFile = fopen(outputFileName, "a");
+    if (!outputFile)
+    {
+        fprintf(stderr, "Could not create outputfile");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int wordIndex = 0; wordIndex < TOTAL_WORDS; wordIndex++)
+    {
+        char line[CHARS_PER_WORD+1];
+        sprintf(line, "%s\n", finalWordList->words[wordIndex]);
+        fprintf(outputFile, line);
+    }
 }
 
 void populateWordList(FILE* file, WordList* wordList, int wordListSize)
