@@ -4,5 +4,5 @@
 - [x] In order list use pointer assignation instead of `strncopy`
 - [ ] Add support to remove vowels
 - [x] output the list to a file
-- [ ] Log compression rate
+- [x] Log compression rate
 - [ ] ship release

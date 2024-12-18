@@ -1,8 +1,8 @@
 // hash_utils.h
-#include "word_utils.h"
-
 #ifndef HASH_UTILS_H
 #define HASH_UTILS_H
+
+#include "word_utils.h"
 
 // Creates a linked list where each node represents a word
 typedef struct Node

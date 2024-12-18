@@ -1,8 +1,8 @@
 // word_utils.h
-#include <stdio.h>
-
 #ifndef WORD_UTILS_H
 #define WORD_UTILS_H
+
+#include <stdio.h>
 
 // Change this values to configure the program
 #define TOTAL_WORDS 10000

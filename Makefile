@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -g
 
 # Source files
-SRC = src/main.c src/word_utils.c src/hash_utils.c
+SRC = src/main.c src/compression.c src/word_utils.c src/hash_utils.c
 # Output executable
 OUT = bin/main
 
