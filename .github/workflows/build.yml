@@ -35,7 +35,12 @@ jobs:
         run: |
           make
           mkdir -p dist
-          if [[ ${{ matrix.os }} == "windows-latest" ]]; then mv bin/main.exe dist/; else mv bin/main dist/; fi
+          if ($env:matrix_os -eq "windows-latest") {
+            mv bin\main.exe dist\
+          } else {
+            mv bin/main dist/
+          }
+        shell: pwsh
 
       - name: List files before archiving (for debugging)
         run: ls -l dist/
