@@ -1,0 +1,66 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"  # Trigger only on version tags, e.g., v1.0.0
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]  # Target platforms
+        include:
+          - os: ubuntu-latest
+            build_system: "make"
+          - os: macos-latest
+            build_system: "make"
+          - os: windows-latest
+            build_system: "msbuild"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up build tools (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
+          choco install mingw -y
+        shell: cmd
+
+      - name: Install dependencies (Linux/macOS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          if [[ ${{ matrix.os }} == "ubuntu-latest" ]]; then sudo apt-get install -y build-essential cmake; fi
+          if [[ ${{ matrix.os }} == "macos-latest" ]]; then brew install cmake; fi
+
+      - name: Configure with CMake
+        run: |
+          cmake -S . -B build
+          cmake --build build --config Release
+        shell: bash
+
+      - name: Build with MSBuild (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          mkdir build
+          cd build
+          cmake -G "MinGW Makefiles" ..
+          cmake --build . --config Release
+
+      - name: Archive Build Artifacts
+        run: |
+          mkdir -p dist
+          if [[ ${{ matrix.os }} == "ubuntu-latest" ]]; then tar -czvf dist/linux-build.tar.gz build/; fi
+          if [[ ${{ matrix.os }} == "macos-latest" ]]; then tar -czvf dist/mac-build.tar.gz build/; fi
+          if [[ ${{ matrix.os }} == "windows-latest" ]]; then 7z a dist/windows-build.zip build/*; fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-build
+          path: dist/
