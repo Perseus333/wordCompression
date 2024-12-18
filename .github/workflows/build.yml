@@ -35,10 +35,19 @@ jobs:
         run: |
           make
           mkdir -p dist
+          ls -l bin  # Check if the file exists after build
           if ($env:matrix_os -eq "windows-latest") {
-            mv bin\main.exe dist\
+            if (Test-Path bin\main.exe) {
+              mv bin\main.exe dist\
+            } else {
+              Write-Host "Windows executable not found!"
+            }
           } else {
-            mv bin/main dist/
+            if (Test-Path bin/main) {
+              mv bin/main dist/
+            } else {
+              Write-Host "Executable not found on Linux/macOS!"
+            }
           }
         shell: pwsh
 
