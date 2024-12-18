@@ -1,3 +1,5 @@
+[![wakatime](https://wakatime.com/badge/user/018df55f-2a3c-48be-a9ea-3fefe07d7cac/project/9e5cab20-148a-4e03-a1d9-e2a61df321e5.svg)](https://wakatime.com/badge/user/018df55f-2a3c-48be-a9ea-3fefe07d7cac/project/9e5cab20-148a-4e03-a1d9-e2a61df321e5)
+
 # WordCompression
 
 ***A small program that compresses a dictionary of words into smaller, somewhat legible, words.***
