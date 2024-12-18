@@ -17,11 +17,12 @@ void groupByLen(WordHashTable* table, WordList* wordList)
     }
 }
 
-int outputListIndex = 0;
 
 // Compressing the words
 void compressWords(WordHashTable* table, WordList* outputList)
 {
+    int outputListIndex = 0;
+    WordHashTable compressedWordsTable = {0};
     /*
     We don't modify the first bucket because it contains single-character words and they cannot be compressed.
     The second bucket contains 2 character long words, which also cannot be compressed because the first bucket *should* contain all possible characters. Therefore it is also unaltered.
@@ -33,6 +34,7 @@ void compressWords(WordHashTable* table, WordList* outputList)
         while(currentNode)
         {
             strncpy(outputList->words[outputListIndex], currentNode->word, CHARS_PER_WORD);
+            insertWord(&compressedWordsTable, currentNode->word);
             outputListIndex++;
             currentNode = currentNode->next;
         }
@@ -55,7 +57,7 @@ void compressWords(WordHashTable* table, WordList* outputList)
             {
                 strncpy(candidate, currentNode->word, candidateLen);
                 // 0 = not found; 1 = found
-                int foundWord = searchWord(table, candidate);
+                int foundWord = searchWord(&compressedWordsTable, candidate);
                 if ((foundWord == 1) && (strlen(candidate) < strlen(currentNode->word)))
                 {
                     candidateLen++;
@@ -63,6 +65,7 @@ void compressWords(WordHashTable* table, WordList* outputList)
                 else
                 {
                     strncpy(outputList->words[outputListIndex], candidate, CHARS_PER_WORD);
+                    insertWord(&compressedWordsTable, candidate);
                     outputListIndex++;
                     validCandidate = true;
                 }
