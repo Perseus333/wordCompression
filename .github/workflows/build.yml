@@ -63,14 +63,12 @@ jobs:
           # Archive based on the OS
           if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
             zip -r dist/linux-build.zip dist/  # Changed tar to zip for stability
-          fi
-          if [ "${{ matrix.os }}" == "macos-latest" ]; then
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
             zip -r dist/mac-build.zip dist/  # Changed tar to zip for stability
-          fi
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
             7z a dist/windows-build.zip dist/*  # Windows: using 7z
           fi
-        shell: pwsh
+        shell: bash
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
