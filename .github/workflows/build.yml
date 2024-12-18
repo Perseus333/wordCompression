@@ -37,12 +37,25 @@ jobs:
           mkdir -p dist
           if [[ ${{ matrix.os }} == "windows-latest" ]]; then mv bin/main.exe dist/; else mv bin/main dist/; fi
 
+      - name: List files before archiving (for debugging)
+        run: ls -l dist/
+
+      - name: Ensure files are stable before archiving
+        run: |
+          sleep 2  # Increase the wait time to ensure files are stable
+
       - name: Archive Build Artifacts
         run: |
-          sleep 1  # Ensure files are stable before archiving
-          if [[ ${{ matrix.os }} == "ubuntu-latest" ]]; then tar -czvf dist/linux-build.tar.gz dist/; fi
-          if [[ ${{ matrix.os }} == "macos-latest" ]]; then tar -czvf dist/mac-build.tar.gz dist/; fi
-          if [[ ${{ matrix.os }} == "windows-latest" ]]; then 7z a dist/windows-build.zip dist/*; fi
+          # Archive based on the OS
+          if [[ ${{ matrix.os }} == "ubuntu-latest" ]]; then
+            zip -r dist/linux-build.zip dist/  # Changed tar to zip for stability
+          fi
+          if [[ ${{ matrix.os }} == "macos-latest" ]]; then
+            zip -r dist/mac-build.zip dist/  # Changed tar to zip for stability
+          fi
+          if [[ ${{ matrix.os }} == "windows-latest" ]]; then
+            7z a dist/windows-build.zip dist/*  # Windows: using 7z
+          fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
