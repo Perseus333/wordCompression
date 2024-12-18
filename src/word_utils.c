@@ -36,7 +36,7 @@ void writeOutputFile(WordList* finalWordList)
     char outputFileName[FILE_NAME_MAX_LEN];
     sprintf(outputFileName, "%s/output.txt", OUTPUT_DIR);
 
-    FILE* outputFile = fopen(outputFileName, "a");
+    FILE* outputFile = fopen(outputFileName, "w");
     if (!outputFile)
     {
         fprintf(stderr, "Could not create outputfile");
@@ -81,4 +81,39 @@ void populateWordList(FILE* file, WordList* wordList, int wordListSize)
         strncpy(wordList->words[wordPos], wordBuffer, wordLen);
         ++wordPos;
     }
+}
+
+unsigned int countCharsInFile(char filePath[FILE_NAME_MAX_LEN])
+{
+    FILE* file = fopen(filePath, "r");
+    if (!file)
+    {
+        fprintf(stderr, "Could not open file%s\n", filePath);
+        exit(EXIT_FAILURE);
+    }
+    unsigned int characterCount = 0;
+    char character;
+    // Counts characters until it reaches the EndOfFile
+    while ((character = fgetc(file)) != EOF)
+    {
+        // Ignore newlines for more accurate results
+        if (character != '\n')
+            characterCount++;
+    }
+
+    return characterCount;
+}
+
+double calculateCompressionRatio()
+{
+    char dataFilePath[FILE_NAME_MAX_LEN*3] = {0};
+    sprintf(dataFilePath, "%s/%d.txt", DATA_DIR, TOTAL_WORDS);
+    char outputFilePath[FILE_NAME_MAX_LEN*3] = {0};
+    sprintf(outputFilePath, "%s/output.txt", OUTPUT_DIR);
+
+    unsigned int originalCharAmount = countCharsInFile(dataFilePath);
+    unsigned int compressedCharAmount = countCharsInFile(outputFilePath);
+    double ratio = (double)compressedCharAmount / (double)originalCharAmount;
+    
+    return ratio;
 }

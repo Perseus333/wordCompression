@@ -22,6 +22,7 @@ void groupByLen(WordHashTable* table, WordList* wordList)
 void compressWords(WordHashTable* table, WordList* outputList)
 {
     int outputListIndex = 0;
+    // To keep track of duplicates
     WordHashTable compressedWordsTable = {0};
     /*
     We don't modify the first bucket because it contains single-character words and they cannot be compressed.
@@ -93,6 +94,8 @@ int main()
     clock_t endTime = clock();
     double elapsed_seconds = (double)(endTime - startTime) / CLOCKS_PER_SEC;
     printf("Elapsed time: %.6f seconds\n", elapsed_seconds);
+    double ratio = calculateCompressionRatio();
+    printf("Compression rate: %.3f%%", ratio*100);
     
     // For debugging purposes
     // for (int i = 0; i < TOTAL_WORDS; i++) printf("%s\n", orderedList->words[i]);

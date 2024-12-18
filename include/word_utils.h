@@ -20,5 +20,7 @@ WordList* allocateWordList(int wordListSize);
 FILE* readFile(int wordListSize);
 void writeOutputFile(WordList* finalWordList);
 void populateWordList(FILE* file, WordList* wordList, int wordListSize);
+unsigned int countCharsInFile(char filepath[FILE_NAME_MAX_LEN]);
+double calculateCompressionRatio();
 
 #endif // WORD_UTILS
