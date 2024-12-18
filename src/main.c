@@ -25,8 +25,9 @@ int main()
     clock_t endTime = clock();
     double elapsed_seconds = (double)(endTime - startTime) / CLOCKS_PER_SEC;
     printf("Elapsed time: %.6f seconds\n", elapsed_seconds);
+
     double ratio = calculateCompressionRatio();
-    printf("Compression rate: %.3f%%", ratio*100);
+    printf("Compression rate: %.3f%%\n", ratio*100);
     
     // For debugging purposes
     // for (int i = 0; i < TOTAL_WORDS; i++) printf("%s\n", orderedList->words[i]);

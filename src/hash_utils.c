@@ -39,4 +39,3 @@ int searchWord(WordHashTable* table, const char* word)
     }
     return 0; // not found
 }
-
